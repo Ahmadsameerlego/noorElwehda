@@ -1,11 +1,14 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+<headerComponentVue />
   <router-view/>
+  <footerComponentVue />
 </template>
 
+<script setup>
+import footerComponentVue from "./components/layout/footerComponent.vue";
+import headerComponentVue from "./components/layout/headerComponent.vue";
+
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

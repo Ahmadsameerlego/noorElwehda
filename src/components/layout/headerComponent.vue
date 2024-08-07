@@ -6,11 +6,12 @@
     </div>
     <nav class="navbar__links">
       <router-link to="/" class="navbar__link">Home</router-link>
-      <router-link to="/" class="navbar__link">About us</router-link>
+      <!-- <router-link to="/" class="navbar__link">About us</router-link> -->
       <router-link to="/dashboard" class="navbar__link">Dashboard</router-link>
-      <router-link to="/" class="navbar__link">My Cars</router-link>
-      <router-link to="/" class="navbar__link">Ledger</router-link>
-      <router-link to="/" class="navbar__link">Contact us</router-link>
+      <router-link to="/mycars" class="navbar__link">My Cars</router-link>
+      <router-link to="/ledger" class="navbar__link">Ledger</router-link>
+      <!-- <router-link to="/" class="navbar__link">Contact us</router-link> -->
+      <router-link to="/subCustomers" class="navbar__link">Subcustomers</router-link>
     </nav>
     <div class="navbar__actions">
       <div class="dropdown">

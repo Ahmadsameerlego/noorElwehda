@@ -1,5 +1,9 @@
 <template>
-<categoryComponentVue />
+<categoryComponentVue
+    v-motion-slide-visible-right
+      :delay="400"
+    :duration="1500"
+ />
 </template>
 
 <script lang="ts" setup>

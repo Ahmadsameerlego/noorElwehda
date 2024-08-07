@@ -1,27 +1,52 @@
 <template>
-  <div class="car-list-container">
+  <div class="car-list-container pt-5">
     <div class="container">
-        <nav class="mb-0 pb-0 px-0 py-0">
-        <ul class="breadcrumb">
-          <li >
-            <router-link to="/dashboard" class="main">Dashboard</router-link> /
-            <router-link to="/dashboard" class="active">New Cars</router-link> 
-
-          </li>
-        </ul>
-      </nav>
-
-    <header>
-      <h3 class="cat-title fw-bold">New Cars</h3>
       
+    <header class="w-25 d-flex justify-content-start align-items-center">
+        <span class="line right"></span>
+        <h3 class="cat-title fw-bold my-cars-title">Ledger</h3>
+        <span class="line left"></span>
     </header>
-    <div class="car-list">
+
+
+    <!-- Customer Outstanding  -->
+    <section class="row mb-4">
+        <div class="col-md-6">
+            <section class="outstand w-100 d-flex justify-content-between align-items-baseline">
+                <h6 class="mb-0">
+                    Customer Outstanding
+                </h6>
+
+                <div class="d-flex">
+                    <span>
+                        4000$
+                    </span>
+
+                    <span class="mx-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M14.4297 5.92969L20.4997 11.9997L14.4297 18.0697" stroke="#322E2D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.5 12H20.33" stroke="#322E2D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+
+                    <span>
+                        12,000 AED
+                    </span>
+                </div>
+            </section>
+        </div>
+    </section>
+    
+
+    <div class="car-list" >
       
-      <carComponentVue v-for="car in cars" :key="car.id" :car="car"/>
+      <carComponentVue v-for="car in cars" :key="car.id" :car="car" :type="type"/>
     </div>
-    <footer class="mb-5">
+    <footer class="mb-5" >
       <pagination :totalPages="totalPages" :currentPage="currentPage" @pageChanged="handlePageChange" />
     </footer>
+
+
     </div>
   </div>
 </template>
@@ -37,7 +62,8 @@ export default {
   },
   data() {
     return {
-      cars: [
+     
+cars: [
         {
           id: 1,
           model: 'Hyundai, Accent, 2019',
@@ -62,15 +88,42 @@ export default {
       totalPages: 10,
     };
   },
+
+
   methods: {
-    handlePageChange(page) {
-      this.currentPage = page;
-      // Fetch new data based on the current page
-    },
+   
   },
 };
 </script>
 
+
+<style  lang="scss">
+    .outstand{
+        background-color: #FEF0F4;
+        border: 1.2px solid #CC2525;
+        border-radius: 7px;
+        padding: 10px;
+        color:#CC2525 ;
+        h6, span{font-weight: 600;}
+    }
+  .apexcharts-legend{display: none !important;}
+  .parts{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    .item{
+      width: 200px;
+      .icon{
+        width: 20px;
+        height: 20px;
+      }
+      .text{
+        font-weight: 500;
+      }
+    }
+  }
+</style>
 
 <style lang="scss">
     .breadcrumb{
@@ -94,7 +147,26 @@ line-height: 16px; /* 133.333% */
         }
     }
 </style>
-<style scoped>
+<style scoped lang="scss">
+.card-filter{
+    border-radius: 10px;
+    border: 1px solid rgba(219, 217, 217, 0.87);
+    background:  #FFF;
+
+}
+.line{
+    width: 50px;
+    background-color: #331F8E;
+    height: 3px;
+    margin-top: -10px;
+    &.right{
+        margin-right: 15px;
+        
+    }
+    &.left{
+        margin-left: 15px;
+    }
+}
 .detail{
 color:  #331F8E;
 font-family: Poppins;

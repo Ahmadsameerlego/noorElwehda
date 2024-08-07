@@ -3,6 +3,13 @@ import HomeView from '../views/HomeView.vue'
 import loginView from "../views/loginvView.vue"
 import dashboard from "../views/DashboardView.vue"
 import category from "../views/CategoryView.vue"
+import mycars from "../views/mycarsView.vue"
+import ledger from "../views/ledgerView.vue"
+import cartDetails from "../views/carDetails.vue"
+import subCustomers from "../views/subCustomers.vue"
+import addSubCustomer from "../views/addSubCustomer.vue"
+import showSubCustomer from "../views/showSubCustomer.vue"
+import editSubCustomer from "../views/editSubCustomer.vue"
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -23,8 +30,35 @@ const routes: Array<RouteRecordRaw> = [
     path : '/category/:id',
     name : 'category',
     component  : category
+  },
+  {
+    path  :'/mycars',
+    component : mycars
+  },
+  {
+    path : '/ledger',
+    component : ledger
+  },
+  {
+    path : '/cart-details/:id',
+    component : cartDetails
+  },
+  {
+    path : '/subCustomers',
+    component : subCustomers
+  },
+  {
+    path : "/add-subCustomer",
+    component : addSubCustomer
+  },
+  {
+    path : '/show-subCustomer',
+    component : showSubCustomer
+  },
+  {
+    path : '/editSubCustomer/:id',
+    component : editSubCustomer
   }
-  
 ]
 
 const router = createRouter({

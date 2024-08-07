@@ -8,9 +8,11 @@
           <label for="username">User Name</label>
           <input type="text" id="username" v-model="username" placeholder="Please enter your username" required />
         </div>
-        <div class="form-group">
+        <div class="form-group position-relative">
           <label for="password">Password</label>
           <input type="password" id="password" v-model="password" placeholder="Please enter your password" required />
+
+          
         </div>
         <button type="submit" class="sign-in-button">
            Sign in
@@ -42,6 +44,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -61,7 +64,7 @@ export default {
 }
 
 h2 {
-  color: #4d2e90;
+  color: #331F8E;
   margin-bottom: 10px;
 }
 
@@ -90,7 +93,7 @@ input {
 }
 
 .sign-in-button {
-  background-color: #4d2e90;
+  background-color: #331F8E;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -133,7 +136,7 @@ input {
 }
 
 .request-user-link {
-  color: #4d2e90;
+  color: #331F8E;
   text-decoration: none;
   font-weight: bold;
   display: flex;
@@ -145,7 +148,7 @@ input {
     position: absolute;
     width: 104px;
     height: 1.2px;
-    background-color: #4d2e90;
+    background-color: #331F8E;
     bottom: 0;
     right: 43%;
   }

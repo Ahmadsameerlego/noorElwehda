@@ -4,11 +4,26 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
+import VueApexCharts from 'vue3-apexcharts'
+
 
 
 // import bootstrap
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+
+
+// import primevue 
+import PrimeVue from 'primevue/config';
+//theme
+import "primevue/resources/themes/lara-light-indigo/theme.css";     
+    
+//core
+import "primevue/resources/primevue.min.css";
+
+import ToastService from 'primevue/toastservice';
+
 
 
 // import fontawesome
@@ -24,8 +39,15 @@ dom.watch();
 
 import '@/assets/scss/index.scss'
 
+
+import { MotionPlugin } from '@vueuse/motion'
+
 createApp(App)
 .use(store)
+.use(PrimeVue)
+.use(ToastService)
+.use(MotionPlugin)
 .component('font-awesome-icon', FontAwesomeIcon)
 .use(router)
+.use(VueApexCharts)
 .mount('#app')

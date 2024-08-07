@@ -5,7 +5,7 @@
   <section class="info">
     <div class="info__text">
       <h2>
-        <span class="highlight">Fast, Secure</span> and <span class="highlight">Reliable</span> World Wide
+        <span class="highlight "> Fast , Secure</span> and <span class="highlight">Reliable</span> World Wide
       </h2>
       <p class="text-start">We offer logistic that just makes good business sense</p>
     </div>

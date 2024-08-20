@@ -14,9 +14,9 @@
 </clipPath>
 </defs>
 </svg>
- <span class="mx-2 fw-bold">
+ <router-link to="/contact" class="mx-2 fw-bold">
     Contact Us Today
- </span>
+ </router-link>
       </button>
     </div>
     <div class="customer-block" :style="{ backgroundImage: 'url(' + rightImage + ')' }">
@@ -33,9 +33,9 @@
 </clipPath>
 </defs>
 </svg>
-            <span class="mx-2 fw-bold">
+            <router-link to="/contact" class="mx-2 fw-bold">
                 Contact Us Today
-            </span>
+            </router-link>
       </button>
     </div>
   </section>

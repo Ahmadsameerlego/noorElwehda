@@ -40,13 +40,24 @@ dom.watch();
 import '@/assets/scss/index.scss'
 
 
-import { MotionPlugin } from '@vueuse/motion'
+import { MotionPlugin } from '@vueuse/motion';
+
+
+
+// import axios
+import axios from 'axios';
+axios.defaults.baseURL = 'http://64.227.132.28/api/';
+// axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');   
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.lang = localStorage.getItem('locale');
+
+
 
 createApp(App)
 .use(store)
 .use(PrimeVue)
+.use(MotionPlugin as any)
 .use(ToastService)
-.use(MotionPlugin)
 .component('font-awesome-icon', FontAwesomeIcon)
 .use(router)
 .use(VueApexCharts)

@@ -10,6 +10,8 @@ import subCustomers from "../views/subCustomers.vue"
 import addSubCustomer from "../views/addSubCustomer.vue"
 import showSubCustomer from "../views/showSubCustomer.vue"
 import editSubCustomer from "../views/editSubCustomer.vue"
+import register from "../views/registerView.vue"
+import contact from "../views/contactView.vue"
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -20,6 +22,10 @@ const routes: Array<RouteRecordRaw> = [
     path : '/login',
     name : 'login',
     component  : loginView
+  },
+  {
+    path : '/register',
+    component : register
   },
   {
     path :'/dashboard',
@@ -58,6 +64,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path : '/editSubCustomer/:id',
     component : editSubCustomer
+  },
+  {
+    path : '/contact',
+    component : contact
   }
 ]
 

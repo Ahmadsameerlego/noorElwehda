@@ -7,14 +7,31 @@
     </div>
     <p class="about__subheader">What we can do for you and your company?</p>
     <p class="about__text">
-      Sometimes goods can arrive early when they are being brought into the country. Other times items need a place to be stored for the short- or long-term prior to export. Our headquarters includes a 17,000 square.
+      {{ data }}
     </p>
   </section>
 </template>
 
 <script>
+import axios from "axios" ;
 export default {
   name: 'AboutSection',
+  data(){
+    return{
+      data : ''
+    }
+  },
+  methods:{
+    async getAbout(){
+      await axios.get('about')
+      .then( (res)=>{
+        this.data = res.data.data ;
+      } )
+    }
+  },
+  mounted(){
+    this.getAbout()
+  }
 };
 </script>
 

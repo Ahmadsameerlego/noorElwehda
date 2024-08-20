@@ -12,37 +12,43 @@
 
   <!-- slider  -->
 
-   <Carousel :autoplay="100" transition="2000" :items-to-show="4" :wrap-around="true" :breakpoints="breakpoints">
-    <Slide v-for="slide in 10" :key="slide">
+   <Carousel :autoplay="100" transition="2000" :items-to-show="4" :wrap-around="true" :breakpoints="breakpoints" v-if="cars.length>0">
+    <Slide v-for="(slide, index) in cars" :key="index">
       <div class="slide-item">
       <div class="carousesl-image">
-              <img :src="require('@/assets/imgs/s1.jpg.png')" alt="">
+              <img :src="slide.image" alt="">
       </div>
       <div class="slide-details">
         <h3 class="fw-bold car_name">
-          Hyundai, Accent, 2019
+          {{ sllide.brand }}, {{ sllide.model }}, {{ sllide.year }}
         </h3>
         <p>
-          Price <span class="price">20,000 AED </span>
+          Price <span class="price">{{ sllide.year }} AED </span>
         </p>
         <p>
-            Car ID <span class="car_id">AL00023</span>
+            Car ID <span class="car_id">{{ car.car_num }}</span>
         </p>
         <p>
-            VIN  <span class="vin">FSDDS333SESD</span>
+            VIN  <span class="vin">{{  car.vin }}</span>
         </p>
       </div>
     </div>
     </Slide>
   </Carousel>
 
+  <div v-else>
+    <Message severity="info">No Avilable Cars Yet !</Message>
 
+  </div>
 
   </section>
 </template>
 
 <script>
+import axios from "axios";
 import { Carousel,  Slide } from 'vue3-carousel'
+import Message from 'primevue/message';
+
 import 'vue3-carousel/dist/carousel.css'
 
 export default {
@@ -65,13 +71,27 @@ export default {
         snapAlign: 'center',
       },
     },
+    cars : []
     }
   },
   name: 'HeroSection',
     components: {
     Carousel,
     Slide,
+    Message 
   },
+
+  methods:{
+    async getCars(){
+      await axios.get('available-cars')
+      .then( (res)=>{
+        this.cars = res.data.data.data ;
+      } )
+    }
+  },
+  mounted(){
+    this.getCars()
+  }
 
 };
 </script>
@@ -79,6 +99,17 @@ export default {
 
 
 <style>
+.p-message{
+  width: 60%;
+  margin: auto;
+  height: 50px;
+}
+.p-message-wrapper{
+  display: flex;
+  justify-content: space-around;
+  align-items:center;
+  height: 100%;
+}
 .carousel__item {
   min-height: 300px;
   width: 100%;

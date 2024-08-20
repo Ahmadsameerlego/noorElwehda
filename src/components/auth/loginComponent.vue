@@ -3,47 +3,186 @@
     <div class="login-card">
       <h2 class="fw-bold">Hello Dear Visitor!</h2>
       <p>Please Enter Login Information</p>
-      <form @submit.prevent="signIn">
+      <form @submit.prevent="login" ref="loginForm">
         <div class="form-group">
-          <label for="username">User Name</label>
-          <input type="text" id="username" v-model="username" placeholder="Please enter your username" required />
+          <label for="phone">Customer Phone</label>
+          <div class="row">
+            <div class="col-md-2">
+              <Dropdown
+                v-model="selectedCountry"
+                :options="countries"
+                optionLabel="key"
+                placeholder="Code"
+                class="w-full md:w-14rem"
+              >
+                <template #value="slotProps">
+                  <div v-if="slotProps.value" class="flex align-items-center">
+                    <div>
+                      {{ slotProps.value.key }} {{ slotProps.value.flag }}
+                    </div>
+                  </div>
+                  <span v-else>
+                    {{ slotProps.placeholder }}
+                  </span>
+                </template>
+                <template #option="slotProps">
+                  <div class="flex align-items-center">
+                    <div>
+                      {{ slotProps.option.flag }} {{ slotProps.option.key }}
+                    </div>
+                  </div>
+                </template>
+              </Dropdown>
+            </div>
+            <div class="col-md-10">
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                v-model="phone"
+                placeholder="Please enter your customer Phone"
+                @input="validatePhone"
+                required
+              />
+              <span v-if="phoneError" class="error">{{ phoneError }}</span>
+            </div>
+          </div>
         </div>
         <div class="form-group position-relative">
           <label for="password">Password</label>
-          <input type="password" id="password" v-model="password" placeholder="Please enter your password" required />
-
-          
+          <input
+            type="password"
+            id="password"
+            name="password"
+            v-model="password"
+            placeholder="Please enter your password"
+            @input="validatePassword"
+            required
+          />
+          <span v-if="passwordError" class="error">{{ passwordError }}</span>
         </div>
-        <button type="submit" class="sign-in-button">
-           Sign in
+
+        <div class="d-flex justify-content-end align-items-end">
+          <button class="btn forget" @click.prevent="forget = true"> Forget Password ? </button>
+        </div>
+        <button type="submit" class="sign-in-button" :disabled="disabled">
+          <span v-if="!spinner">Request</span>
+            <div class="spinner-border mx-2" role="status" v-if="spinner">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
         </button>
+
+
       </form>
       <div class="divider">OR</div>
-      <a href="#" class="request-user-link">
+      <router-link to="/register" class="request-user-link">
         Request A User
-      </a>
+      </router-link>
     </div>
   </div>
+
+  <Dialog v-model:visible="forget" width="700" modal header="" :style="{ width: '25rem' }">
+    <form action="">
+      <p class="forget-text">
+        Please contact customer service at email <a href="mailto:ahmadsamerlego@gmail.com" class="color">[email@example.com]</a> or phone <a href="tel:01013746111" class="color">[123-456-7890]</a>.
+      </p>
+
+      <div class="mt-3 flex-center">
+        <router-link to="/home" class="btn main-btn pt-3 pb-3 w-100 fw-bold"> Home </router-link>
+      </div>
+    </form>
+  </Dialog>
 </template>
 
 <script>
+import Dialog from 'primevue/dialog';
+import Dropdown from 'primevue/dropdown';
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      username: '',
-      password: ''
+      phone: '',
+      password: '',
+      forget: false,
+      countries: [],
+      selectedCountry: null,
+      phoneError: '',
+      passwordError: '',
+            disabled : false ,
+      spinner : false,
+ 
     };
   },
+  components: {
+    Dialog,
+    Dropdown,
+  },
   methods: {
-    signIn() {
-      // Add your sign-in logic here
-      console.log('Sign in with', this.username, this.password);
-    }
-  }
+    validatePhone() {
+      const phonePattern = /^[0-9]{10,15}$/;
+      this.phoneError = !phonePattern.test(this.phone) ? 'Phone number must contain only numbers and be 10-15 digits long.' : '';
+    },
+    validatePassword() {
+      this.passwordError = this.password.length < 6 ? 'Password must be at least 6 characters long.' : '';
+    },
+    validateForm() {
+      // Trigger validation for all fields
+      this.validatePhone();
+      this.validatePassword();
+
+      // Return true if no errors
+      return !this.phoneError && !this.passwordError;
+    },
+     async login(){
+      this.disabled = true ;
+      this.spinner = true ;
+      const fd = new FormData(this.$refs.loginForm)
+      fd.append('country_code', this.selectedCountry.key)
+      await axios.post('sign-up', fd)
+      .then( (res)=>{
+        if(res.data.key === "success"){
+            this.$toast.add({ severity: 'success', summary: res.data.msg, life: 300000 });
+            
+            setTimeout(() => {
+              this.success = true ;
+            }, 1000);
+        }else{
+            this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });
+
+        }
+
+         this.disabled = false ;
+              this.spinner = false ;
+      } )
+      .catch( (err)=>{
+            this.$toast.add({ severity: 'error', summary: "something wrong", life: 3000 });
+      } )
+    },
+    async getCountries() {
+      await axios.get('countries').then((res) => {
+        this.countries = res.data.data;
+      });
+    },
+  },
+  mounted() {
+    this.getCountries();
+  },
 };
 </script>
 
+<style scoped>
+.error {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 0.5em;
+}
+</style>
 <style scoped lang="scss">
+.forget-text{
+  color: #332F2E;
+  font-size: 16px;
+}
 
 .login-container {
   display: flex;
@@ -134,7 +273,11 @@ input {
 .divider:after {
   right: 0;
 }
-
+.forget{
+  color: #331F8E;
+  font-weight: 600;
+  font-size: 20px;
+}
 .request-user-link {
   color: #331F8E;
   text-decoration: none;

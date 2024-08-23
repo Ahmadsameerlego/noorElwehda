@@ -13,6 +13,8 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
+// importing AOS css style globally
+import "aos/dist/aos.css";
 
 // import primevue 
 import PrimeVue from 'primevue/config';
@@ -40,7 +42,7 @@ dom.watch();
 import '@/assets/scss/index.scss'
 
 
-import { MotionPlugin } from '@vueuse/motion';
+// import { MotionPlugin } from '@vueuse/motion';
 
 
 
@@ -56,7 +58,7 @@ axios.defaults.headers.lang = localStorage.getItem('locale');
 createApp(App)
 .use(store)
 .use(PrimeVue)
-.use(MotionPlugin as any)
+// .use(MotionPlugin as any)
 .use(ToastService)
 .component('font-awesome-icon', FontAwesomeIcon)
 .use(router)

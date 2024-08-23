@@ -92,12 +92,14 @@
       </div>
     </form>
   </Dialog>
+  <Toast />
 </template>
 
 <script>
 import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
 import axios from 'axios';
+import Toast from 'primevue/toast';
 
 export default {
   data() {
@@ -117,6 +119,7 @@ export default {
   components: {
     Dialog,
     Dropdown,
+    Toast
   },
   methods: {
     validatePhone() {
@@ -139,14 +142,20 @@ export default {
       this.spinner = true ;
       const fd = new FormData(this.$refs.loginForm)
       fd.append('country_code', this.selectedCountry.key)
-      await axios.post('sign-up', fd)
+      fd.append('device_type', 'web')
+      fd.append('device_id', localStorage.getItem('device_id'))
+      await axios.post('sign-in', fd)
       .then( (res)=>{
         if(res.data.key === "success"){
-            this.$toast.add({ severity: 'success', summary: res.data.msg, life: 300000 });
+            this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
             
             setTimeout(() => {
               this.success = true ;
+              localStorage.setItem('user', JSON.stringify(res.data.data))
+              localStorage.setItem('token', res.data.data.token)
+                        this.$router.push('/')
             }, 1000);
+
         }else{
             this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });
 
@@ -167,6 +176,12 @@ export default {
   },
   mounted() {
     this.getCountries();
+
+        fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => localStorage.setItem('device_id', data.ip))
+    .catch(error => console.error(error));
+
   },
 };
 </script>

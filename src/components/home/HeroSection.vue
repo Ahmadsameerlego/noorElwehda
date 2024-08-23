@@ -10,13 +10,14 @@
     }"
     :loop="true"
   >
-    <swiper-slide>
+    <swiper-slide v-for="(text, index) in news" :key="index">
       <section class="hero">
         <div class="hero__content">
           <h1 class="text-start fw-bold type" style="width: 56%">
-            Buy Cars from America while you are at home
+            <!-- Buy Cars from America while you are at home -->
+            {{ text.content }}
           </h1>
-          <p class="text-start" style="width: 65%">
+          <p class="text-start text-white" style="width: 65%">
             Working day and night to facilitate your car transportation starting
             from providing buyer accounts, towing, shipping, clearance, and
             tracking it at all times.
@@ -24,18 +25,7 @@
         </div>
       </section>
     </swiper-slide>
-    <swiper-slide>
-      <section class="hero">
-        <div class="hero__content">
-          <h1 class="text-start fw-bold type" style="width: 56%">
-            Lorem ipsum dolor sit amet consectetur.
-          </h1>
-          <p class="text-start" style="width: 65%">
-           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure incidunt quas ipsa nam, iusto debitis? Distinctio quidem consequatur numquam quos?
-          </p>
-        </div>
-      </section>
-    </swiper-slide>
+    
   </swiper>
 </template>
 
@@ -51,10 +41,27 @@ import "swiper/css/pagination";
 import {EffectFade ,  Pagination, Autoplay } from "swiper/modules";
 import "swiper/css/autoplay";
 
+import axios from 'axios';
 export default {
   components: {
     Swiper,
     SwiperSlide,
+  },
+  data(){
+    return{
+      news : []
+    }
+  },
+  methods:{
+    async getNews(){
+      await axios.get('news')
+      .then( (res)=>{
+        this.news = res.data.data
+      } )
+    }
+  },
+  mounted(){
+    this.getNews()
   },
   setup() {
     return {

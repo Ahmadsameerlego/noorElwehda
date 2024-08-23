@@ -15,12 +15,12 @@
          <div class="form-group">
                       <label for="username">Mobile Number</label>
          <div class="row">
-            <div class="col-md-2">
+            <div class="col-2">
                 <select class="form-select h-100" name="" id="" required>
                     <option v-for="country in countries" :key="country.id" :value="country.key"> {{   country.key }} </option>
                 </select>
             </div>
-            <div class="col-md-10">
+            <div class="col-10">
                           <input type="tel" id="phone"  name="phone"  v-model="phone" placeholder="Please enter your Mobile Number" required />
             </div>
          </div>
@@ -104,6 +104,8 @@ export default {
       } )
       .catch( (err)=>{
                                   this.$toast.add({ severity: 'error', summary: "something wrong", life: 3000 });
+                                   this.disabled = false ;
+              this.spinner = false ;
       } )
     }
   },

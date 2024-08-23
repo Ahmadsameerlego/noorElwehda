@@ -2,7 +2,7 @@
   <section class="customer-section">
     <div class="customer-block">
       <h2 class="fw-bold">Are You A Customer?</h2>
-      <p class="w-50">At Noor Alwahda, we are making research continuously and improving our services to the highest standards</p>
+      <p class="w-50 text-white">At Noor Alwahda, we are making research continuously and improving our services to the highest standards</p>
       <button class="contact-button">
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
 <g clip-path="url(#clip0_155_2614)">
@@ -21,7 +21,7 @@
     </div>
     <div class="customer-block" :style="{ backgroundImage: 'url(' + rightImage + ')' }">
       <h2 class="fw-bold">Are You Have Subcustomer?</h2>
-      <p class="w-50">At Noor Alwahda, we are making research continuously and improving our services to the highest standards</p>
+      <p class="w-50 text-white">At Noor Alwahda, we are making research continuously and improving our services to the highest standards</p>
       <button class="contact-button main-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
 <g clip-path="url(#clip0_179_1271)">

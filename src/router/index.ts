@@ -12,6 +12,7 @@ import showSubCustomer from "../views/showSubCustomer.vue"
 import editSubCustomer from "../views/editSubCustomer.vue"
 import register from "../views/registerView.vue"
 import contact from "../views/contactView.vue"
+import about from "../views/aboutView.vue"
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -68,6 +69,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path : '/contact',
     component : contact
+  },
+  {
+    path : '/about',
+    component : about
   }
 ]
 

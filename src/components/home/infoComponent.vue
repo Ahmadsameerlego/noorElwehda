@@ -2,7 +2,7 @@
   
 
 
-  <section class="info">
+  <section class="info" style="z-index:99">
     <div class="info__text">
       <h2>
         <span class="highlight "> Fast , Secure</span> and <span class="highlight">Reliable</span> World Wide

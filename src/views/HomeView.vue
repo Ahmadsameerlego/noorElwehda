@@ -1,34 +1,40 @@
 <template>
   <HeroSectionVue
-    
-  />
-  <infoComponentVue
-     v-motion-slide-visible-bottom
-    :delay="400"
-    :duration="1500"
-   />
-  <AboutSectionVue 
-    v-motion-slide-visible-bottom
-    :delay="400"
-    :duration="1500"
-  />
-  <AvilableCarsVue 
-   v-motion-slide-visible-bottom
-    :delay="400"
-    :duration="1500"
+          data-aos="fade-up" data-aos-duration="2000"
 
   />
+  <infoComponentVue
+    data-aos="fade-up" data-aos-duration="2000"
+   />
+  <AboutSectionVue 
+   data-aos="fade-up" data-aos-duration="2000"
+  />
+  <AvilableCarsVue 
+   data-aos="fade-up" data-aos-duration="2000"
+  />
   <CustomerSectionVue
-    v-motion-slide-visible-bottom
-    :delay="400"
-    :duration="1500"
+    data-aos="fade-up" data-aos-duration="2000"
    />
 </template>
 
-<script lang="ts" setup>
+<script >
+import AOS from "aos";
 import AboutSectionVue from "@/components/home/AboutSection.vue";
 import AvilableCarsVue from "@/components/home/AvilableCars.vue";
 import CustomerSectionVue from "@/components/home/CustomerSection.vue";
 import HeroSectionVue from "@/components/home/HeroSection.vue";
 import infoComponentVue from "@/components/home/infoComponent.vue";
+
+export default{
+   mounted() {
+    AOS.init();
+  },
+  components:{
+    AboutSectionVue,
+    AvilableCarsVue,
+    CustomerSectionVue,
+    infoComponentVue,
+    HeroSectionVue
+  }
+}
 </script>

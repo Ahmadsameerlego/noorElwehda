@@ -1,13 +1,22 @@
 <template>
 
 <loginComponentVue
-    v-motion-slide-visible-left
-      :delay="400"
-    :duration="1500"
+          data-aos="fade-up" data-aos-duration="2000"
+
  />
 </template>
 
-<script lang="ts" setup>
-import loginComponentVue from "@/components/auth/contactComponent.vue";
 
+<script>
+import loginComponentVue from "@/components/auth/contactComponent.vue";
+import AOS from "aos";
+
+export default{
+  mounted() {
+    AOS.init();
+  },
+  components:{
+loginComponentVue
+  }
+}
 </script>

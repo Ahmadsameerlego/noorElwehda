@@ -15,12 +15,10 @@
         <div class="hero__content">
           <h1 class="text-start fw-bold type" style="width: 56%">
             <!-- Buy Cars from America while you are at home -->
-            {{ text.content }}
+            {{ text.title }}
           </h1>
           <p class="text-start text-white" style="width: 65%">
-            Working day and night to facilitate your car transportation starting
-            from providing buyer accounts, towing, shipping, clearance, and
-            tracking it at all times.
+            {{ text.description }}
           </p>
         </div>
       </section>
@@ -54,7 +52,7 @@ export default {
   },
   methods:{
     async getNews(){
-      await axios.get('news')
+      await axios.get('intros')
       .then( (res)=>{
         this.news = res.data.data
       } )

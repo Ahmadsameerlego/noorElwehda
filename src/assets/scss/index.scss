@@ -124,3 +124,38 @@ letter-spacing: 0.07px;
 .w-25{width: 100% !important;}
 .cat-title{font-size: 18px !important;}
 }
+
+.p-toast-message-text{
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+.error {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 0.5em;
+}
+
+
+.request-user-link {
+  color: #331F8E;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  &::before{
+    content: "";
+    position: absolute;
+    width: 104px;
+    height: 1.2px;
+    background-color: #331F8E;
+    bottom: 0;
+    right: 43%;
+  }
+}
+
+.request-user-link font-awesome-icon {
+  margin-right: 5px;
+}

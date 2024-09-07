@@ -85,7 +85,11 @@ export default {
       this.disabled = true ;
       this.spinner = true ;
       const fd = new FormData(this.$refs.contactForm)
-      await axios.post('new-complaint', fd)
+      await axios.post('new-complaint', fd, {
+        headers:{
+          Authorization : `Bearer ${localStorage.getItem('token')}`
+        }
+      })
       .then( (res)=>{
         if(res.data.msg === "success"){
             this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });

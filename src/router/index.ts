@@ -13,7 +13,23 @@ import editSubCustomer from "../views/editSubCustomer.vue"
 import register from "../views/registerView.vue"
 import contact from "../views/contactView.vue"
 import about from "../views/aboutView.vue"
+import profile from "../views/profileView.vue"
+import changePass from "../views/changePasswordView.vue"
+import car from "../views/carsTabs.vue"
+import lists from "../views/priceListView.vue"
+import list from "../views/singleShippingList.vue"
+import search from "../views/searchCarView.vue"
+import terms from "../views/termView.vue"
+import privacy from "../views/privacyView.vue"
 const routes: Array<RouteRecordRaw> = [
+  {
+    path : '/terms',
+    component : terms
+  },
+  {
+    path : '/privacy',
+    component : privacy
+  },
   {
     path: '/',
     name: 'home',
@@ -51,6 +67,10 @@ const routes: Array<RouteRecordRaw> = [
     component : cartDetails
   },
   {
+    path : '/car/:id',
+    component : car
+  },
+  {
     path : '/subCustomers',
     component : subCustomers
   },
@@ -59,7 +79,7 @@ const routes: Array<RouteRecordRaw> = [
     component : addSubCustomer
   },
   {
-    path : '/show-subCustomer',
+    path : '/show-subCustomer/:id',
     component : showSubCustomer
   },
   {
@@ -73,6 +93,26 @@ const routes: Array<RouteRecordRaw> = [
   {
     path : '/about',
     component : about
+  },
+  {
+    path : '/profile',
+    component : profile
+  },
+  {
+    path : '/changePass',
+    component : changePass
+  },
+  {
+    path : '/shipping-lists',
+    component : lists
+  },
+  {
+    path : '/list/:id',
+    component : list
+  },
+  {
+    path : '/search',
+    component : search
   }
 ]
 

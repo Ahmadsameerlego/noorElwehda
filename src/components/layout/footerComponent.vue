@@ -3,8 +3,15 @@
     <div class="container">
       <div class="footer-column">
         <h3>About Our Company</h3>
-        <p class="text-start footer-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
-      </div>
+          <ul>
+          <li v-for="link in aboutLinks" :key="link.text" class="useful d-flex align-items-center mb-2">
+            <i class="fa-solid fa-angles-right"></i>
+            <router-link :to="link.href" class="use-link text-start d-inline-block mx-3">
+                {{ link.text }}
+                </router-link>
+          </li>
+        </ul>      
+        </div>
       <div class="footer-column">
         <h3>Latest Cars</h3>
         <div v-for="car in latestCars" :key="car.id" class="car">
@@ -121,12 +128,17 @@ export default {
         { text: 'Shipping Price List', href: '#' },
         { text: 'Search by Vin or LOT', href: '#' },
         { text: 'Buy Cars', href: '#' },
-        { text: 'About Us', href: '#' },
-        { text: 'Contact Us', href: '#' },
         { text: 'Ledger', href: '#' },
         { text: 'My Cars', href: '#' },
         { text: 'Subscribe', href: '#' }
-      ]
+      ],
+      aboutLinks: [
+        { text: 'About Us', href: 'about' },
+        { text: 'Contact Us', href: 'contact' },
+        { text: 'Privacy Policy', href: 'privacy' },
+        { text: 'Terms & Conditions', href: 'terms' },
+       
+      ],
     };
   }
 };

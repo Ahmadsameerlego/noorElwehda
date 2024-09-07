@@ -1,8 +1,8 @@
 <template>
   <div class="login-container pt-5 pb-5">
     <div class="login-card">
-      <h2 class="fw-bold">Request A User</h2>
-      <p>Please Enter Register Information</p>
+      <h2 class="fw-bold">Profile</h2>
+      <p>You Can Edit Your Information From Here</p>
       <form @submit.prevent="register" ref="registerForm">
         <div class="form-group">
           <label for="username">Customer Name</label>
@@ -93,25 +93,18 @@
           </div>
         </div>
 
-        <div class="form-group position-relative">
-          <label for="password">Customer Password</label>
-          <input
-            type="password"
-            id="password"
-            v-model="password"
-            placeholder="Please enter your password"
-            @input="validatePassword"
-            required
-            name="password"
-          />
-          <span v-if="passwordError" class="error">{{ passwordError }}</span>
-        </div>
+        
         <button type="submit" class="sign-in-button" :disabled="disabled">
-          <span v-if="!spinner">Request</span>
+          <span v-if="!spinner">Edit</span>
             <div class="spinner-border mx-2" role="status" v-if="spinner">
                     <span class="visually-hidden">Loading...</span>
                   </div>
         </button>
+
+
+         <router-link to="/changePass" class="request-user-link mt-4">
+          Change Password
+        </router-link>
       </form>
 
     </div>
@@ -170,11 +163,40 @@ export default {
       passwordError: '',
       disabled : false ,
       spinner : false,
-      success : false
+      success : false,
+      currency_code : ''
     };
   },
 
   methods: {
+
+    // get profile data 
+    async getData(){
+      await axios.get('profile', {
+        headers : {
+          Authorization : `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then( (res)=>{
+        if( res.data.key === "success" ){
+          const data = res.data.data ;
+          this.username = data.name ;
+          this.email = data.email ;
+          this.phone = data.phone;
+          this.currency_code = data.currency_code;
+          for(  let i = 0 ; i < this.countries.length ; i++ ){
+            if(data.country_code == this.countries[i].key){
+              this.selectedCountry  = this.countries[i] ;
+              this.country  = this.countries[i] ;
+            }
+          }
+          // console.log(data)
+        }
+      } )
+      .catch( (err)=>{
+            this.$toast.add({ severity: 'error', summary: "something wrong", life: 3000 });
+      } )
+    },
     validateUsername() {
       this.usernameError = this.username.length < 4 ? 'Name must be at least 4 characters long.' : '';
     },
@@ -186,34 +208,34 @@ export default {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       this.emailError = !emailPattern.test(this.email) ? 'Please enter a valid email address.' : '';
     },
-    validatePassword() {
-      this.passwordError = this.password.length < 6 ? 'Password must be at least 6 characters long.' : '';
-    },
+    
     validateForm() {
       // Trigger validation for all fields
       this.validateUsername();
       this.validatePhone();
       this.validateEmail();
-      this.validatePassword();
 
       // Return true if no errors
-      return !this.usernameError && !this.phoneError && !this.emailError && !this.passwordError;
+      return !this.usernameError && !this.phoneError && !this.emailError ;
     },
     async register(){
       this.disabled = true ;
       this.spinner = true ;
       const fd = new FormData(this.$refs.registerForm)
- if(this.selectedCountry){
+      if(this.selectedCountry){
         fd.append("country_code", this.selectedCountry.key);
+        fd.append("currency_code", this.selectedCountry.currency_code);
       }
-            await axios.post('sign-up', fd)
+            await axios.post('update-profile?_method=put', fd, {
+              headers : {
+                Authorization : `Bearer ${localStorage.getItem('token')}`
+              }
+            })
       .then( (res)=>{
         if(res.data.key === "success"){
             this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
             
-            setTimeout(() => {
-              this.success = true ;
-            }, 1000);
+           
         }else{
             this.$toast.add({ severity: 'error', summary: res.data.msg, life: 5000 });
 
@@ -236,6 +258,7 @@ export default {
   },
   mounted() {
     this.getCountries();
+    this.getData();
   },
   components: {
     Dropdown,

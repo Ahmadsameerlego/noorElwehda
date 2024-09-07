@@ -5,54 +5,45 @@
         <ul class="breadcrumb">
           <li >
             <router-link to="/dashboard" class="main">Dashboard</router-link> /
-            <router-link to="/dashboard" class="active">New Cars</router-link> 
+            <router-link to="/dashboard" class="active">{{ level }}</router-link> 
 
           </li>
         </ul>
       </nav>
 
     <header>
-      <h3 class="cat-title fw-bold">New Cars</h3>
+      <h3 class="cat-title fw-bold">{{ level }}</h3>
       
     </header>
-    <div class="car-list">
+    <div class="car-list mb-5">
       
       <carComponentVue v-for="car in cars" :key="car.id" :car="car"/>
     </div>
-    <footer class="mb-5">
+    <!-- <footer class="mb-5">
       <pagination :totalPages="totalPages" :currentPage="currentPage" @pageChanged="handlePageChange" />
-    </footer>
+    </footer> -->
     </div>
   </div>
+  <Toast />
 </template>
 
 <script>
-import carComponentVue from '../shared/carComponent.vue';
-import Pagination from './PaginationComponent.vue';
+import axios from 'axios';
+import carComponentVue from '../shared/carToDetail.vue';
+// import Pagination from './PaginationComponent.vue';
+import Toast from 'primevue/toast';
 
 export default {
+  
   components: {
-    Pagination,
-    carComponentVue
+    // Pagination,
+    carComponentVue,
+    Toast
   },
   data() {
     return {
-      cars: [
-        {
-          id: 1,
-          model: 'Hyundai, Accent, 2019',
-          carID: 'AL00023',
-          lot: '43432',
-          purchaseDate: '21/06/2024',
-          vin: 'FSDD533555ED',
-          vinLink: '#',
-          auction: 'Auction',
-          export: 'Export',
-          state: 'CA',
-          image: require('@/assets/imgs/s1.jpg.png'),
-        },
-        // ... Add more cars as necessary
-      ],
+            level : '',
+      cars: [],
       links: [
         { text: 'Dashboard', url: '/dashboard' },
         { text: 'New Cars', url: '/new-cars' },
@@ -67,7 +58,50 @@ export default {
       this.currentPage = page;
       // Fetch new data based on the current page
     },
+
+    async getCarsByCategory(){
+      await axios.get(`cars-by-category?category_id=${this.$route.params.id}`, {
+        headers:{
+          Authorization : `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then( (res)=>{
+        this.cars = res.data.data.data
+      } )
+      .catch( (err)=>{
+                      this.$toast.add({ severity: 'error', summary: "Something Went Wrong", life: 10000 });
+      } )
+    }
   },
+  mounted(){
+    this.getCarsByCategory();
+    let level = localStorage.getItem('level') ;
+    if(level){
+      if(level == "new_cars"){
+        this.level = "New Cars";
+      }
+      else if(level == "towing"){
+        this.level = "Towing";
+      }
+      else if(level == "warehouse"){
+        this.level = "Warehouse";
+      }
+      else if(level == "shipping"){
+        this.level = "Shipping";
+      }
+      else if(level == "custom"){
+        this.level = "Custom";
+      }
+      
+      else if(level == "ready_collected"){
+        this.level = "Ready Collected";
+      }
+      else{
+        this.level = "Cars";
+
+      }
+    }
+  }
 };
 </script>
 

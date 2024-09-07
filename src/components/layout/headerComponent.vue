@@ -12,16 +12,16 @@
       </div>
       <nav class="navbar__links">
         <router-link to="/" class="navbar__link">Home</router-link>
-        <router-link to="/about" class="navbar__link">About us</router-link>
-        <!-- <router-link to="/dashboard" class="navbar__link"
+        <router-link v-if="!isAuthed" to="/about" class="navbar__link">About us</router-link>
+        <router-link v-if="isAuthed" to="/dashboard" class="navbar__link"
           >Dashboard</router-link
-        > -->
-        <!-- <router-link to="/mycars" class="navbar__link">My Cars</router-link> -->
-        <!-- <router-link to="/ledger" class="navbar__link">Ledger</router-link> -->
-        <router-link to="/contact" class="navbar__link">Contact us</router-link>
-        <!-- <router-link to="/subCustomers" class="navbar__link"
+        >
+        <router-link v-if="isAuthed" to="/mycars" class="navbar__link">My Cars</router-link>
+        <router-link  v-if="isAuthed" to="/ledger" class="navbar__link">Ledger</router-link>
+        <router-link v-if="!isAuthed" to="/contact" class="navbar__link">Contact us</router-link>
+        <router-link v-if="isAuthed" to="/subCustomers" class="navbar__link"
           >Subcustomers</router-link
-        > -->
+        >
       </nav>
       <div class="navbar__actions">
         <div class="dropdown">
@@ -39,11 +39,11 @@
           </ul>
         </div>
 
-        <!-- <div class="navbar__notification mx-4">
+        <div v-if="isAuthed" class="navbar__notification mx-4">
           <i class="fa-regular fa-bell"></i>
-        </div> -->
-        <router-link to="/login" class="navbar__login">Login</router-link>
-        <!-- <div class="dropdown">
+        </div>
+        <router-link v-if="!isAuthed" to="/login" class="navbar__login">Login</router-link>
+        <div class="dropdown" v-if="isAuthed">
           <button
             class="btn dropdown-toggle"
             type="button"
@@ -87,7 +87,7 @@
 
             <section class="px-3 py-3 border-bottom">
               <router-link
-                to="/"
+                to="/profile"
                 class="single-info mb-3 d-flex justify-content-between align-items-center"
               >
                 <div class="flex-center">
@@ -133,7 +133,7 @@
                 </div>
               </router-link>
               <router-link
-                to="/"
+                to="/subCustomers"
                 class="single-info mb-3 d-flex justify-content-between align-items-center"
               >
                 <div class="flex-center">
@@ -311,7 +311,7 @@
                 </div>
               </router-link>
               <router-link
-                to="/"
+                to="/shipping-lists"
                 class="single-info mb-3 d-flex justify-content-between align-items-center"
               >
                 <div class="flex-center">
@@ -343,7 +343,7 @@
                 </div>
               </router-link>
               <router-link
-                to="/"
+                to="/search"
                 class="single-info d-flex justify-content-between align-items-center"
               >
                 <div class="flex-center">
@@ -376,7 +376,7 @@
 
             <section class="px-3 py-3 border-bottom">
               <router-link
-                to="/"
+                to="/about"
                 class="single-info mb-3 d-flex justify-content-between align-items-center"
               >
                 <div class="flex-center">
@@ -409,7 +409,7 @@
                 </div>
               </router-link>
               <router-link
-                to="/"
+                to="/contact"
                 class="single-info mb-3 d-flex justify-content-between align-items-center"
               >
                 <div class="flex-center">
@@ -441,39 +441,81 @@
             </section>
 
              <section class="px-3 py-3 ">
-              <router-link
-                to="/"
-                class="single-info mb-3 d-flex justify-content-between align-items-center"
+              <button
+                @click.stop="logout"
+                class="single-info btn mb-3 d-flex justify-content-between align-items-center"
               >
                 <div class="flex-center">
                   <span class="circle logout">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-  <path d="M10.1602 14.8467H10.0735C7.11351 14.8467 5.68684 13.68 5.44017 11.0667C5.41351 10.7933 5.61351 10.5467 5.89351 10.52C6.16017 10.4933 6.41351 10.7 6.44017 10.9733C6.63351 13.0667 7.62017 13.8467 10.0802 13.8467H10.1668C12.8802 13.8467 13.8402 12.8867 13.8402 10.1733V5.82666C13.8402 3.11333 12.8802 2.15333 10.1668 2.15333H10.0802C7.60684 2.15333 6.62017 2.94666 6.44017 5.08C6.40684 5.35333 6.17351 5.56 5.89351 5.53333C5.61351 5.51333 5.41351 5.26666 5.43351 4.99333C5.66017 2.34 7.09351 1.15333 10.0735 1.15333H10.1602C13.4335 1.15333 14.8335 2.55333 14.8335 5.82666V10.1733C14.8335 13.4467 13.4335 14.8467 10.1602 14.8467Z" fill="white"/>
-  <path d="M10.0002 8.5H2.41357C2.14024 8.5 1.91357 8.27333 1.91357 8C1.91357 7.72667 2.14024 7.5 2.41357 7.5H10.0002C10.2736 7.5 10.5002 7.72667 10.5002 8C10.5002 8.27333 10.2736 8.5 10.0002 8.5Z" fill="white"/>
-  <path d="M3.90012 10.7333C3.77346 10.7333 3.64679 10.6867 3.54679 10.5867L1.31346 8.35333C1.12012 8.16 1.12012 7.84 1.31346 7.64667L3.54679 5.41333C3.74012 5.22 4.06012 5.22 4.25346 5.41333C4.44679 5.60667 4.44679 5.92667 4.25346 6.12L2.37346 8L4.25346 9.88C4.44679 10.0733 4.44679 10.3933 4.25346 10.5867C4.16012 10.6867 4.02679 10.7333 3.90012 10.7333Z" fill="white"/>
-</svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M10.1602 14.8467H10.0735C7.11351 14.8467 5.68684 13.68 5.44017 11.0667C5.41351 10.7933 5.61351 10.5467 5.89351 10.52C6.16017 10.4933 6.41351 10.7 6.44017 10.9733C6.63351 13.0667 7.62017 13.8467 10.0802 13.8467H10.1668C12.8802 13.8467 13.8402 12.8867 13.8402 10.1733V5.82666C13.8402 3.11333 12.8802 2.15333 10.1668 2.15333H10.0802C7.60684 2.15333 6.62017 2.94666 6.44017 5.08C6.40684 5.35333 6.17351 5.56 5.89351 5.53333C5.61351 5.51333 5.41351 5.26666 5.43351 4.99333C5.66017 2.34 7.09351 1.15333 10.0735 1.15333H10.1602C13.4335 1.15333 14.8335 2.55333 14.8335 5.82666V10.1733C14.8335 13.4467 13.4335 14.8467 10.1602 14.8467Z" fill="white"/>
+                      <path d="M10.0002 8.5H2.41357C2.14024 8.5 1.91357 8.27333 1.91357 8C1.91357 7.72667 2.14024 7.5 2.41357 7.5H10.0002C10.2736 7.5 10.5002 7.72667 10.5002 8C10.5002 8.27333 10.2736 8.5 10.0002 8.5Z" fill="white"/>
+                      <path d="M3.90012 10.7333C3.77346 10.7333 3.64679 10.6867 3.54679 10.5867L1.31346 8.35333C1.12012 8.16 1.12012 7.84 1.31346 7.64667L3.54679 5.41333C3.74012 5.22 4.06012 5.22 4.25346 5.41333C4.44679 5.60667 4.44679 5.92667 4.25346 6.12L2.37346 8L4.25346 9.88C4.44679 10.0733 4.44679 10.3933 4.25346 10.5867C4.16012 10.6867 4.02679 10.7333 3.90012 10.7333Z" fill="white"/>
+                    </svg>
                   </span>
 
                   <span class="name  mx-3"> Logout </span>
                 </div>
 
                
-              </router-link>
+              </button>
        
               
             </section>
 
           </ul>
-        </div> -->
+        </div>
       </div>
     </header>
   </div>
+  <Toast />
 </template>
 
 <script>
+import axios from 'axios';
+import Toast from 'primevue/toast';
+
 export default {
   name: "NavbarComponent",
+  data(){
+    return{
+      isAuthed : false
+    }
+  },
   methods:{
+    
+     async logout(){
+      this.disabled = true ;
+      this.spinner = true ;
+      const fd = new FormData(this.$refs.loginForm)
+      
+      await axios.delete('sign-out', fd, {
+        headers : {
+            Authorization : `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then( (res)=>{
+
+       
+        if(res.data.key === "success"){
+            this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
+                        localStorage.removeItem('token')
+            localStorage.removeItem('user')
+
+        setTimeout(() => {
+          location.reload()
+        }, 1000);
+
+        }else{
+            this.$toast.add({ severity: 'error', summary: res.data.msg, life: 10000 });
+
+        }
+        
+      } )
+      .catch( (err)=>{
+            this.$toast.add({ severity: 'error', summary: err.response.data.msg, life: 10000 });
+      } )
+    },
     toggleNaBar(){
       let menutoggle = document.querySelector('.toggle');
       menutoggle.classList.toggle('active')
@@ -481,6 +523,13 @@ export default {
       let navBar = document.querySelector('.navbar__links')
       navBar.classList.toggle('active')
     }
+  },
+  components:{
+    Toast
+  },
+  mounted(){
+    let user = localStorage.getItem('user');
+    this.isAuthed = user ? true : false ;
   }
 };
 </script>

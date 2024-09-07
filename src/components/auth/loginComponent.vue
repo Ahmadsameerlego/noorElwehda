@@ -66,7 +66,7 @@
           <button class="btn forget" @click.prevent="forget = true"> Forget Password ? </button>
         </div>
         <button type="submit" class="sign-in-button" :disabled="disabled">
-          <span v-if="!spinner">Request</span>
+          <span v-if="!spinner">Login</span>
             <div class="spinner-border mx-2" role="status" v-if="spinner">
                     <span class="visually-hidden">Loading...</span>
                   </div>
@@ -141,11 +141,18 @@ export default {
       this.disabled = true ;
       this.spinner = true ;
       const fd = new FormData(this.$refs.loginForm)
-      fd.append('country_code', this.selectedCountry.key)
+      if(this.selectedCountry){
+              fd.append('country_code', this.selectedCountry.key)
+      }
       fd.append('device_type', 'web')
       fd.append('device_id', localStorage.getItem('device_id'))
       await axios.post('sign-in', fd)
       .then( (res)=>{
+
+        if(this.selectedCountry==null){
+                      this.$toast.add({ severity: 'error', summary: "please select a country code", life: 3000 });
+
+        }else{
         if(res.data.key === "success"){
             this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
             
@@ -156,16 +163,22 @@ export default {
                         this.$router.push('/')
             }, 1000);
 
+            setTimeout(() => {
+              location.reload()
+            }, 2000);
+
         }else{
-            this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });
+            this.$toast.add({ severity: 'error', summary: res.data.msg, life: 10000 });
 
         }
-
+        }
          this.disabled = false ;
               this.spinner = false ;
       } )
       .catch( (err)=>{
-            this.$toast.add({ severity: 'error', summary: "something wrong", life: 3000 });
+            this.$toast.add({ severity: 'error', summary: err.response.data.msg, life: 10000 });
+            this.disabled = false ;
+              this.spinner = false ;
       } )
     },
     async getCountries() {
@@ -293,26 +306,5 @@ input {
   font-weight: 600;
   font-size: 20px;
 }
-.request-user-link {
-  color: #331F8E;
-  text-decoration: none;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  &::before{
-    content: "";
-    position: absolute;
-    width: 104px;
-    height: 1.2px;
-    background-color: #331F8E;
-    bottom: 0;
-    right: 43%;
-  }
-}
 
-.request-user-link font-awesome-icon {
-  margin-right: 5px;
-}
 </style>

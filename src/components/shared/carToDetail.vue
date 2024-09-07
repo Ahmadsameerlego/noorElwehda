@@ -1,6 +1,6 @@
 <template>
 
-    <router-link :to="'/cart-details/'+car.id">
+    <router-link :to="'/car/'+car.id">
        <div class="car-item" >
         <img :src="car.image" alt="Car Image" />
         <div class="car-info">

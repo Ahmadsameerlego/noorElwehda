@@ -14,25 +14,27 @@
 
    <Carousel :autoplay="100" transition="2000" :items-to-show="4" :wrap-around="true" :breakpoints="breakpoints" v-if="cars.length>0">
     <Slide v-for="(slide, index) in cars" :key="index">
-      <div class="slide-item">
+     <router-link :to="'/car/'+slide.id">
+       <div class="slide-item">
       <div class="carousesl-image">
               <img :src="slide.image" alt="">
       </div>
       <div class="slide-details">
         <h3 class="fw-bold car_name">
-          {{ sllide.brand }}, {{ sllide.model }}, {{ sllide.year }}
+          {{ slide.brand }}, {{ slide.model }}, {{ slide.year }}
         </h3>
         <p>
-          Price <span class="price">{{ sllide.year }} AED </span>
+          Price <span class="price">{{ slide.year }} AED </span>
         </p>
         <p>
-            Car ID <span class="car_id">{{ car.car_num }}</span>
+            Car ID <span class="car_id">{{ slide.car_num }}</span>
         </p>
         <p>
-            VIN  <span class="vin">{{  car.vin }}</span>
+            VIN  <span class="vin">{{  slide.vin }}</span>
         </p>
       </div>
     </div>
+     </router-link>
     </Slide>
   </Carousel>
 
